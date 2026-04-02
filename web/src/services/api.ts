@@ -1,26 +1,27 @@
+import { supabase } from '../lib/supabase';
 import { mockSongs } from '../data/mockSongs';
 import type { Song } from '../utils/chords';
 
-const API_URL = import.meta.env.VITE_API_URL as string | undefined;
-
 /**
- * Search songs. Falls back to mock data when no backend is configured.
+ * Search songs. Tries Supabase Edge Function first, then mock data.
  */
 export async function searchSongs(
   query: string,
   language?: 'he' | 'en',
 ): Promise<Song[]> {
-  if (API_URL) {
+  // Try Supabase Edge Function
+  if (supabase) {
     try {
-      const params = new URLSearchParams({ q: query });
-      if (language) params.set('lang', language);
-      const res = await fetch(`${API_URL}/api/search?${params}`);
-      if (res.ok) return res.json();
+      const { data, error } = await supabase.functions.invoke('search-chords', {
+        body: { query, language },
+      });
+      if (!error && data?.results) return data.results;
     } catch {
       // fall through to mock
     }
   }
 
+  // Fallback to mock data
   const q = query.toLowerCase();
   return mockSongs.filter((s) => {
     const matchesQuery =
@@ -34,12 +35,25 @@ export async function searchSongs(
  * Get a single song's chord data by ID.
  */
 export async function getSongChords(songId: string): Promise<Song | null> {
-  if (API_URL) {
+  // Try Supabase
+  if (supabase) {
     try {
-      const res = await fetch(`${API_URL}/api/songs/${songId}`);
-      if (res.ok) return res.json();
+      const { data, error } = await supabase
+        .from('cached_chords')
+        .select('*')
+        .eq('id', songId)
+        .single();
+      if (!error && data) {
+        return {
+          id: data.id,
+          title: data.song_title,
+          artist: data.artist,
+          language: data.language,
+          chordsData: data.chords_data,
+        };
+      }
     } catch {
-      // fall through to mock
+      // fall through
     }
   }
 
