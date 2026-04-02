@@ -18,5 +18,18 @@
   "font_size": "Font Size",
   "back": "Back",
   "hebrew_songs": "Hebrew Songs",
-  "english_songs": "English Songs"
+  "english_songs": "English Songs",
+  "login": "Sign in with Google",
+  "logout": "Sign out",
+  "login_required": "Please sign in to access this page",
+  "create_playlist": "Create Playlist",
+  "playlist_name": "Playlist name",
+  "delete": "Delete",
+  "remove": "Remove",
+  "confirm_delete": "Are you sure you want to delete?",
+  "share_copied": "Link copied!",
+  "save_success": "Saved!",
+  "no_saved_songs": "No saved songs yet",
+  "no_playlists": "No playlists yet",
+  "offline_available": "Available offline"
 }

@@ -18,5 +18,18 @@
   "font_size": "גודל גופן",
   "back": "חזרה",
   "hebrew_songs": "שירים בעברית",
-  "english_songs": "שירים באנגלית"
+  "english_songs": "שירים באנגלית",
+  "login": "התחבר עם Google",
+  "logout": "התנתק",
+  "login_required": "יש להתחבר כדי לגשת לעמוד זה",
+  "create_playlist": "צור פלייליסט",
+  "playlist_name": "שם הפלייליסט",
+  "delete": "מחק",
+  "remove": "הסר",
+  "confirm_delete": "האם למחוק?",
+  "share_copied": "הקישור הועתק!",
+  "save_success": "נשמר!",
+  "no_saved_songs": "אין שירים שמורים",
+  "no_playlists": "אין פלייליסטים",
+  "offline_available": "זמין אופליין"
 }
